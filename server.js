@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const path = require("path");
-const fs = require("fs");
 
 const allowCrossDomain = (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -18,43 +16,31 @@ app.use(bodyParser.json());
 app.use(allowCrossDomain);
 
 
-const prop = require("./property-loader");
+const PROP = require("./property-loader");
 const SlideInfo = require("./SlideInfo");
 
-app.use(express.static(prop.presentationRoot));
+app.use(express.static(PROP.PRESENTATIONROOT));
 
-isValidSlideNum = (slideNum) => {
-    let isValid = false;
-    if (slideNum != undefined) {
-        //1st expression i.e. slideNumInt != 0 returns false if slideNum contains only spaces or empty string
-        //2nd is the regExp to check if its a valid integer
-        //3rd is to verify if the slide number is within the range of available slides
-        //4th and 5th verify if the slide is within valid range of slide numbers
-        isValid = (slideNum != 0) && (/^\d+$/.test(slideNum)) && (slideNum >= 1)
-            && (slideNum <= prop.totalSlides);
-    }
-
-    return isValid;
+isValid = (slideNum) => {
+    //verify if slide is within range
+    return (slideNum >= 1) && (slideNum <= PROP.TOTALSLIDES);
 }
 
 app.get("/api/slide/:id", (req, res) => {
-    // console.log("request received");
     let slideNum = +req.params.id;
-    let response = {};
-    if (isValidSlideNum(slideNum)) {
+    if (isValid(slideNum)) {
         let slideInfo = new SlideInfo(slideNum);
-        response = slideInfo.SlideResponse;
-        res.send(response);
-        // console.log(response);
+        res.status(200);
+        res.send(slideInfo.SlideResponse);
     }
     else {
-        response["err"] = "error in response";
-        res.send(response);
+        res.status(404);
+        res.send();
     }
 
 })
 
-app.listen(prop.port, (err) => {
+app.listen(PROP.PORT, (err) => {
     if (err) console.log("Error in starting the server");
-    else console.log("Server listening on port " + prop.port);
+    else console.log("Server listening on port " + PROP.PORT);
 })

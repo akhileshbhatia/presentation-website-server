@@ -3,16 +3,16 @@ const propertiesReader = require("properties-reader");
 const prop = propertiesReader("app.properties");
 
 module.exports = {
-    port: prop.get("server-port"),
-    totalSlides: prop.get("no-of-slides"),
-    presentationRoot: prop.get("presentation-root"),
-    audioFolder: prop.get("audio-folder"),
-    audioFilePrefix: prop.get("audio-file-prefix"),
-    audioFileType: prop.get("audio-file-type"),
-    imageFolder: prop.get("image-folder"),
-    imageFilePrefix: prop.get("image-file-prefix"),
-    imageFileType: prop.get("image-file-type"),
-    textFolder: prop.get("text-folder"),
-    textFilePrefix: prop.get("text-file-prefix"),
-    textFileType: prop.get("text-file-type")
+    PORT: prop.get("server-port"),
+    TOTALSLIDES: prop.get("no-of-slides"),
+    PRESENTATIONROOT: prop.get("presentation-root"),
+    AUDIOFOLDER: prop.get("audio-folder"),
+    AUDIOFILEPREFIX: prop.get("audio-file-prefix"),
+    AUDIOFILETYPE: prop.get("audio-file-type"),
+    IMAGEFOLDER: prop.get("image-folder"),
+    IMAGEFILEPREFIX: prop.get("image-file-prefix"),
+    IMAGEFILETYPE: prop.get("image-file-type"),
+    TEXTFOLDER: prop.get("text-folder"),
+    TEXTFILEPREFIX: prop.get("text-file-prefix"),
+    TEXTFILETYPE: prop.get("text-file-type")
 }
